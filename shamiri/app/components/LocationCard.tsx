@@ -1,9 +1,22 @@
-import React from 'react'
+import React from 'react';
 
-const LocationCard = () => {
-  return (
-    <div>LocationCard</div>
-  )
+interface Location {
+  id: number;
+  name: string;
+  type: string;
 }
 
-export default LocationCard
+interface Props {
+  location: Location;
+}
+
+const LocationCard: React.FC<Props> = ({ location }) => {
+  return (
+    <div>
+      <h2>{location.name}</h2>
+      <p>Type: {location.type}</p>
+    </div>
+  );
+};
+
+export default LocationCard;
