@@ -1,5 +1,10 @@
-# shamiri
- shamiri
+# Shamiri Institute
+ Shamiri
 
 Ricky and Morty API
-shamiri/package.json
+
+### To run project
+
+npm install
+
+npm run dev
