@@ -1,10 +1,5 @@
 import React from 'react';
-
-interface Location {
-  id: number;
-  name: string;
-  type: string;
-}
+import {Location} from '../utils/LocationTypes'
 
 interface Props {
   location: Location;
