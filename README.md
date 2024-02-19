@@ -8,3 +8,4 @@ Ricky and Morty API
 npm install
 
 npm run dev
+![alt text](image.png)

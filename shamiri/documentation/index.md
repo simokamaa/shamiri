@@ -23,3 +23,5 @@
 ## Running the project
 - npm install 
 - nm run dev
+
+![alt text](image.png)
