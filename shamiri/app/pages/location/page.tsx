@@ -1,14 +1,10 @@
 import React from 'react'
-import Home from './index'
+import HomePage from '.'
 
-
-function LocationPage() {
+const page = () => {
   return (
-    <div>
-        <Home/>
-    </div>
-    
+    <div><HomePage/></div>
   )
 }
 
-export default LocationPage
+export default page

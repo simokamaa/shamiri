@@ -1,40 +1,45 @@
-'use client'
-import { useState, useEffect } from 'react';
-import { api } from '../../utils/api';
-import  { LocationList }  from '../../components/LocationList';
-import { LocationFilter } from '../../components/LocationFilter';
+"use client"
+
+import React, { useEffect, useState } from 'react';
+import LocationList from '../../components/LocationList';
+import { getLocationsWithResidents } from '../../utils/getLocationsWithResidents';
 
 interface Location {
-    id: number;
-    name: string;
-    type: string;
-   
-  }
-  
+  id: number;
+  name: string;
+  type: string;
+  residents: Resident[];
+}
 
-export default function Home() {
+interface Resident {
+  id: number;
+  name: string;
+  status: string;
+  // Add other properties as needed
+}
+
+const HomePage: React.FC = () => {
   const [locations, setLocations] = useState<Location[]>([]);
-  const [filteredLocations, setFilteredLocations] = useState<Location[]>([]);
-
 
   useEffect(() => {
-    async function fetchLocations() {
+    const fetchLocationsWithResidents = async () => {
       try {
-        const response = await api.getLocations();
-        setLocations(response.data.results);
-        setFilteredLocations(response.data.results);
+        const locationsData = await getLocationsWithResidents();
+        setLocations(locationsData);
       } catch (error) {
-        console.error('Error fetching locations:', error);
+        console.error('Error fetching locations with residents:', error);
       }
-    }
-    fetchLocations();
+    };
+
+    fetchLocationsWithResidents();
   }, []);
 
   return (
     <div>
-      <h1>Locations</h1>
-      <LocationFilter locations={locations} setFilteredLocations={setFilteredLocations} />
-      <LocationList locations={filteredLocations} />
+      <h1 className="text-3xl font-bold mb-4">Locations</h1>
+      <LocationList locations={locations} />
     </div>
   );
-}
+};
+
+export default HomePage;
