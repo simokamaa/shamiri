@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useEffect, useState } from 'react';
 import LocationList from '../../components/LocationList';
 import { getLocationsWithResidents } from '../../utils/getLocationsWithResidents';
@@ -15,7 +14,7 @@ interface Resident {
   id: number;
   name: string;
   status: string;
-  // Add other properties as needed
+  image: string; // Include the image property
 }
 
 const HomePage: React.FC = () => {

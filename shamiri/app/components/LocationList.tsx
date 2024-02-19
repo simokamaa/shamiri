@@ -1,12 +1,6 @@
-// components/LocationList.tsx
-
-import React from 'react';
-
-interface Resident {
-  id: number;
-  name: string;
-  status: string;
-}
+import React, { useState } from 'react';
+import LocationFilter from './LocationFilter';
+import LocationCard from './LocationCard';
 
 interface Location {
   id: number;
@@ -15,27 +9,32 @@ interface Location {
   residents: Resident[];
 }
 
+interface Resident {
+  id: number;
+  name: string;
+  status: string;
+  image: string;
+}
+
 interface LocationListProps {
   locations: Location[];
 }
 
 const LocationList: React.FC<LocationListProps> = ({ locations }) => {
+  const [filteredLocations, setFilteredLocations] = useState(locations);
+
+  const handleFilterChange = (filtered: Location[]) => {
+    setFilteredLocations(filtered);
+  };
+
   return (
     <div>
-      {locations.map(location => (
-        <div key={location.id} className="mb-4">
-          <h2 className="text-lg font-bold">{location.name}</h2>
-          <p className="text-gray-600 mb-2">Type: {location.type}</p>
-          <div className="flex flex-col gap-2">
-            {location.residents.map(resident => (
-              <div key={resident.id} className="border rounded p-2">
-                <h3 className="font-medium">{resident.name}</h3>
-                <p>Status: {resident.status}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+      <LocationFilter locations={locations} handleFilterChange={handleFilterChange} />
+      <div>
+        {filteredLocations.map(location => (
+          <LocationCard key={location.id} location={location} />
+        ))}
+      </div>
     </div>
   );
 };

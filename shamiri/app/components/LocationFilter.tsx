@@ -1,31 +1,53 @@
-import React from 'react';
-import {Location} from '../utils/LocationTypes'
+import React, { useState } from 'react';
 
+interface Location {
+  id: number;
+  name: string;
+  type: string;
+  residents: Resident[];
+}
 
-// In LocationFilter.tsx
+interface Resident {
+  id: number;
+  name: string;
+  status: string;
+  image: string;
+}
+
 interface LocationFilterProps {
-    locations: Location[];
-    setFilteredLocations: React.Dispatch<React.SetStateAction<Location[]>>;
-  }
-  
+  locations: Location[];
+  handleFilterChange: (filtered: Location[]) => void;
+}
 
-export const LocationFilter: React.FC<LocationFilterProps> = ({ locations, setFilteredLocations }) => {
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = event.target.value.toLowerCase();
-    const filteredLocations = locations.filter(location =>
-      location.name.toLowerCase().includes(searchTerm) ||
-      location.type.toLowerCase().includes(searchTerm)
+const LocationFilter: React.FC<LocationFilterProps> = ({ locations, handleFilterChange }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+    filterLocations(event.target.value);
+  };
+
+  const filterLocations = (term: string) => {
+    const filtered = locations.filter(location =>
+      location.name.toLowerCase().includes(term.toLowerCase()) ||
+      location.residents.some(resident =>
+        resident.name.toLowerCase().includes(term.toLowerCase())
+      )
     );
-    setFilteredLocations(filteredLocations);
+    handleFilterChange(filtered);
   };
 
   return (
     <div>
       <input
         type="text"
-        placeholder="Search by name or type..."
-        onChange={handleFilterChange}
+        placeholder="Search by location name, character name, or episode name"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
       />
     </div>
   );
 };
+
+export default LocationFilter;
