@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface Location {
   id: number;
@@ -26,7 +27,11 @@ const LocationCard: React.FC<LocationCardProps> = ({ location }) => {
       <div className="grid grid-cols-3 gap-4">
         {location.residents.map(resident => (
           <div key={resident.id} className="flex flex-col items-center">
-            <img src={resident.image} alt={resident.name} className="w-24 h-24 rounded-full mb-2 shadow-md" />
+            <Link href={`/pages/resident/${resident.id}`} passHref>
+              <div>
+                <img src={resident.image} alt={resident.name} className="w-24 h-24 rounded-full mb-2 shadow-md" />
+              </div>
+            </Link>
             <p className="font-semibold text-center">{resident.name}</p>
             <p className="text-gray-600 text-center">{resident.status}</p>
           </div>
