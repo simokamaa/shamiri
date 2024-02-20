@@ -9,7 +9,7 @@ interface Resident {
     episode: string;
   }
   
-  async function getResident(id: number): Promise<Resident> {
+  export async  function getResident(id: number): Promise<Resident> {
     try {
       const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
       if (!response.ok) {
@@ -31,4 +31,6 @@ interface Resident {
       throw error;
     }
   }
+
+
   
